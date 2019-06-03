@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie-edge">
+
+  <title>Nivantis - Home</title>
+
+  <link rel="stylesheet" href="scripts/w3.css">
+  <link rel="stylesheet" href="scripts/vuetify.min.css">  
+  <link rel="stylesheet" href="ressources/css/home.css">
+
+</head>
+
+<body>
+  <div id="appBar">
+      <side-menu title="Nivantis" :pages="['home','pharmacies','calculatrice']" active="home"></side-menu>
+  </div>
+
+  <div id="main">
+      <app-bar title="Nivantis" pages="['home','pharmacies','calculatrice']" active="home"></app-bar>
+    
+  </div>
+
+  <script type="text/javascript" src="scripts/Vue.js"></script>
+  <script type="text/javascript" src="scripts/Vuetify.js"></script>
+  <script type="text/javascript" src="components/AppBar.js"></script>
+  <script type="text/javascript" src="components/SideMenu.js"></script>
+  <script type="text/javascript" src="ressources/js/home.js"></script>
+</body>
+
+</html>

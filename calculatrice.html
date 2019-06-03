@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie-edge">
+
+  <title>Nivantis - Calculatrice</title>
+
+  <link rel="stylesheet" href="scripts/w3.css">
+  <link rel="stylesheet" href="scripts/vuetify.min.css">
+  <link rel="stylesheet" href="ressources/css/calculatrice.css">
+</head>
+
+<body>
+  <div id="appBar">
+    <side-menu title="Nivantis" :pages="['home','pharmacies','calculatrice']" active="home"></side-menu>
+  </div>
+  <div id="main">
+    <app-bar title="Nivantis" :pages="['home','pharmacies','calculatrice']" active="home"></app-bar>
+    <v-form>
+      <v-container>
+        <v-layout row wrap>
+          <v-flex grow>
+            <v-text-field v-model="panet" label="Prix d'achat net" value="panet" type="number"></v-text-field>
+          </v-flex>
+          <v-flex shrink v-if="pabrut !== 0 && tauxremise !== 0">
+            <v-btn v-on:click="calcPanet">Calculer</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex grow>
+            <v-text-field v-model="pabrut" label="Prix d'achat brut" :value="pabrut" type="number"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex grow>
+            <v-text-field v-model="pvnet" label="Prix de vente net" :value="pvnet" type="number"></v-text-field>
+          </v-flex>
+          <v-flex shrink v-if="panet !== 0 && coeff !== 0">
+            <v-btn v-on:click="calcPvnet">Calculer</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex grow>
+            <v-text-field v-model="tauxremise" label="Taux de remise" :value="tauxremise" type="number">
+            </v-text-field>
+          </v-flex>
+          <v-flex shrink v-if="pabrut !== 0 && panet !== 0">
+            <v-btn v-on:click="calcTauxremise">Calculer</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex grow>
+            <v-text-field v-model="coeff" label="Coefficient multiplicateur" :value="coeff" type="number">
+            </v-text-field>
+          </v-flex>
+          <v-flex shrink v-if="pvnet !== 0 && panet !== 0">
+            <v-btn v-on:click="calcCoeff">Calculer</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-form>
+  </div>
+
+  <script type="text/javascript" src="scripts/Vue.js"></script>
+  <script type="text/javascript" src="scripts/Vuetify.js"></script>
+  <script type="text/javascript" src="components/AppBar.js"></script>
+  <script type="text/javascript" src="components/SideMenu.js"></script>
+  <script type="text/javascript" src="ressources/js/calculatrice.js"></script>
+</body>
+
+</html>
