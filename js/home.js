@@ -7,5 +7,6 @@ function httpGetAsync(theUrl, callback) {
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
     xmlHttp.send(null);
 }
+Vue.use(Vuetify);
 new Vue({el: '#appBar'});
 new Vue({el: '#main'});

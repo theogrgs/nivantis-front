@@ -9,19 +9,20 @@
   <title>Nivantis - Calculatrice</title>
 
   <link rel="stylesheet" href="scripts/w3.css">
+  <link rel="stylesheet" href="scripts/fa.css">
   <link rel="stylesheet" href="scripts/vuetify.min.css">
   <link rel="stylesheet" href="css/calculatrice.css">
 </head>
 
 <body>
   <div id="appBar">
-    <side-menu title="Nivantis" :pages="['home','pharmacies','calculatrice']" active="home"></side-menu>
-  </div>
+    <side-menu title="Nivantis" :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]" active="calculatrice"></side-menu>
+</div>
   <div id="main">
-    <app-bar title="Nivantis" :pages="['home','pharmacies','calculatrice']" active="home"></app-bar>
+    <app-bar title="Nivantis" active="calculatrice"></app-bar>
     <v-form>
       <v-container>
-        <v-layout row wrap>
+        <v-layout row>
           <v-flex grow>
             <v-text-field v-model="panet" label="Prix d'achat net" value="panet" type="number"></v-text-field>
           </v-flex>

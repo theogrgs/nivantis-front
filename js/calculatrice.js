@@ -10,7 +10,7 @@ new Vue({el:"#main",
     },
     methods : {
         calcPanet : function(){
-            this.panet = (parseFloat(this.pabrut) + parseFloat(this.pabrut)*(parseFloat(this.tauxremise))/100.0);
+            this.panet = (parseFloat(this.pabrut) * (1 - parseFloat(this.tauxremise)));
         },
         calcTauxremise : function(){
             this.tauxremise = ((1 - (parseFloat(this.panet)/parseFloat(this.pabrut))) * 100.0);
