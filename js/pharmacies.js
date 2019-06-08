@@ -1,4 +1,3 @@
-Vue.use(Vuetify);
 new Vue({ el: '#appBar' });
 new Vue({
     el: '#main',
@@ -25,7 +24,6 @@ new Vue({
         onSuccess: function (position) {
             this.lat = position.coords.latitude;
             this.lon = position.coords.longitude;
-            alert(this.lat)
         },
         onError: function (error) {
             alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
@@ -35,12 +33,13 @@ new Vue({
         },
         searchPharmas: function () {
             this.service.nearbySearch(
-                { location: this.myPosition, radius: 1500, type: ['pharmacy'] },
+                { location: this.myPosition, type: ['pharmacy'], rankBy: google.maps.places.RankBy.DISTANCE },
                 function (results, status) {
                     if (status !== 'OK') return;
+                    console.log(results);
                     document.getElementById("pharmacies").innerHTML = "";
                     for (let i = 0; i<results.length; i++){
-                        document.getElementById("pharmacies").innerHTML+= '<div class="w3-card">'+results[i].name+'</div>';
+                        document.getElementById("pharmacies").innerHTML+= '<div class="w3-card w3-section w3-round w3-padding w3-center">'+results[i].name+'</div>';
                     }
                 }
             );

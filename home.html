@@ -10,25 +10,26 @@
 
   <link rel="stylesheet" href="scripts/w3.css">
   <link rel="stylesheet" href="scripts/fa.css">
-  <link rel="stylesheet" href="scripts/vuetify.min.css">  
   <link rel="stylesheet" href="css/home.css">
+
+  <script type="text/javascript" src="scripts/Vue.js"></script>
+  <script type="text/javascript" src="scripts/VueLoader.js"></script>
 
 </head>
 
 <body>
   <div id="appBar">
-      <side-menu title="Nivantis" :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]" active="home"></side-menu>
+    <app-bar
+      title="Nivantis" 
+      :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]" 
+      active="home"></app-bar>
   </div>
 
   <div id="main">
-      <app-bar title="Nivantis" active="home"></app-bar>
     
   </div>
 
-  <script type="text/javascript" src="scripts/Vue.js"></script>
-  <script type="text/javascript" src="scripts/Vuetify.js"></script>
-  <script type="text/javascript" src="components/AppBar.js"></script>
-  <script type="text/javascript" src="components/SideMenu.js"></script>
+  
   <script type="text/javascript" src="js/home.js"></script>
 </body>
 

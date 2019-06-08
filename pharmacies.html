@@ -16,22 +16,18 @@
 
 <body>
   <div id="appBar">
-    <side-menu title="Nivantis" :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]" active="pharmacies"></side-menu>
+    <app-bar title="Nivantis" :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]" active="pharmacies"></app-bar>
   </div>
 
   <div id="main">
-      <app-bar title="Nivantis" active="pharmacies"></app-bar>
       <div id="map"></div>
-      <button v-on:click="searchPosition">Position</button>
-      <button v-on:click="searchPharmas">Pharmas</button>
-      <div id="pharmacies"></div>
+      <div id="pharmacies" class="w3-container w3-section">Appuyez sur le bouton en bas à droite pour cherher les officines proches...</div>
+      <i id="refresh" class="material-icons w3-button w3-card w3-circle w3-indigo w3-xlarge" v-on:click="searchPosition();searchPharmas();">refresh</i>
   </div>
 
   <script type="text/javascript" src="scripts/Vue.js"></script>
-  <script type="text/javascript" src="scripts/Vuetify.js"></script>
   <script type="text/javascript" src="components/AppBar.js"></script>
-  <script type="text/javascript" src="components/SideMenu.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlQnaNOAK28mfhJ_ua3jE83JiRE_dDPSY&libraries=places" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxWZwNUysm95GtigT_oznJgeayse8wq2s&libraries=places" async defer></script>
   <script type="text/javascript" src="js/pharmacies.js"></script>
 </body>
 
