@@ -29,13 +29,6 @@ function findOfficinesByCoords(listeCoords) {
     console.log(officines);
     return officines;
 }
-new Vue({ 
-    el: '#appBar',
-    components : {
-        'app-bar' : httpVueLoader('../components/AppBar.vue')
-    }
-});
-new Vue({ el: '#main' });
 /* format listeCoords :
 {
     {

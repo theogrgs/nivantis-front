@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie-edge">
-
-  <title>Nivantis - Calculatrice</title>
-
-  <link rel="stylesheet" href="scripts/w3.css">
-  <link rel="stylesheet" href="scripts/fa.css">
-  <link rel="stylesheet" href="css/calculatrice.css">
-</head>
-
-<body>
-  <div id="appBar">
-    <app-bar title="Nivantis"
-      :pages="[{name:'home',icon:'home'},{name:'pharmacies',icon:'local_pharmacy'},{name:'calculatrice',icon:'dialpad'}]"
-      active="calculatrice"></app-bar>
-  </div>
-  <div id="main" class="w3-animate-opacity">
-
+<template>
+<div>
     <div class="w3-row w3-section w3-container">
       <div class="w3-cell" style="width:100%">
         <div class="w3-row w3-section">
@@ -33,7 +12,7 @@
         </div>
       </div>
       <div class="w3-cell w3-cell-middle w3-container">
-        <div :disabled="panetIF" class="w3-button w3-round w3-indigo" v-on:click="calcPanet" style="padding: 6px 8px;">Calculer</div>
+        <button :disabled="panetIF" class="w3-button w3-round w3-indigo" v-on:click="calcPanet" style="padding: 6px 8px;">Calculer</button>
       </div>
     </div>
     <div class="w3-row w3-section w3-container">
@@ -48,7 +27,7 @@
         </div>
       </div>
       <div class="w3-cell w3-cell-middle w3-container">
-        <div style="visibility: hidden" class="w3-button w3-round w3-indigo" style="padding: 6px 8px;">Calculer</div>
+        <div style="visibility: hidden; padding:6px 8px;" class="w3-button w3-round w3-indigo">Calculer</div>
       </div>
     </div>
     <div class="w3-row w3-section w3-container">
@@ -63,7 +42,7 @@
         </div>
       </div>
       <div class="w3-cell w3-cell-middle w3-container">
-        <div :disabled="pvnetIF" class="w3-button w3-round w3-indigo" v-on:click="calcPvnet" style="padding: 6px 8px;">Calculer</div>
+        <button :disabled="pvnetIF" class="w3-button w3-round w3-indigo" v-on:click="calcPvnet" style="padding: 6px 8px;">Calculer</button>
       </div>
     </div>
     <div class="w3-row w3-section w3-container">
@@ -78,8 +57,8 @@
         </div>
       </div>
       <div class="w3-cell w3-cell-middle w3-container">
-        <div :disabled="tauxremiseIF" class="w3-button w3-round w3-indigo"
-          v-on:click="calcTauxremise" style="padding: 8px 8px;">Calculer</div>
+        <button :disabled="tauxremiseIF" class="w3-button w3-round w3-indigo"
+          v-on:click="calcTauxremise" style="padding: 8px 8px;">Calculer</button>
       </div>
     </div>
     <div class="w3-row w3-section w3-container">
@@ -94,15 +73,50 @@
         </div>
       </div>
       <div class="w3-cell w3-cell-middle w3-container">
-        <div :disabled="coeffIF" class="w3-button w3-round w3-indigo" v-on:click="calcCoeff" style="padding: 6px 8px;">Calculer</div>
+        <button :disabled="coeffIF" class="w3-button w3-round w3-indigo" v-on:click="calcCoeff" style="padding: 6px 8px;">Calculer</button>
       </div>
     </div>
+</div>
+</template>
 
-  </div>
-
-  <script type="text/javascript" src="scripts/Vue.js"></script>
-  <script type="text/javascript" src="components/AppBar.js"></script>
-  <script type="text/javascript" src="js/calculatrice.js"></script>
-</body>
-
-</html>
+<script>
+module.exports = {
+    data: function(){
+        return {
+            panet: 0,
+            tauxremise: 0,
+            pabrut: 0,
+            pvnet: 0,
+            coeff: 0
+        }
+    },
+    computed: {
+        panetIF: function () {
+            return !(this.pabrut !== 0 && this.pabrut !== '' && !isNaN(this.pabrut) && this.tauxremise !== 0 && this.tauxremise !== '' && !isNaN(this.tauxremise))
+        },
+        pvnetIF: function () {
+            return !(this.panet !== 0 && this.panet !== '' && !isNaN(this.panet) && this.coeff !== 0 && this.coeff !== '' && !isNaN(this.coeff));
+        },
+        tauxremiseIF: function () {
+            return !(this.panet !== 0 && this.panet !== '' && !isNaN(this.panet) && this.pabrut !== 0 && this.pabrut !== '' && !isNaN(this.pabrut));
+        },
+        coeffIF: function () {
+            return !(this.panet !== 0 && this.panet !== '' && !isNaN(this.panet) && this.pvnet !== 0 && this.pvnet !== '' && !isNaN(this.pvnet));
+        }
+    },
+    methods: {
+        calcPanet: function () {
+            this.panet = (parseFloat(this.pabrut) * ((1 - parseFloat(this.tauxremise) / 100.0)));
+        },
+        calcTauxremise: function () {
+            this.tauxremise = ((1 - (parseFloat(this.panet) / parseFloat(this.pabrut))) * 100.0);
+        },
+        calcPvnet: function () {
+            this.pvnet = (parseFloat(this.panet) * parseFloat(this.coeff));
+        },
+        calcCoeff: function () {
+            this.coeff = (parseFloat(this.pvnet) / parseFloat(this.panet));
+        }
+    }
+}
+</script>
