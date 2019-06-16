@@ -17,10 +17,13 @@ module.exports = {
       document.getElementById("myOverlay").style.display = "block";
     },
     goToPage: function(pageName) {
-      console.log(document.location.href);
       this.w3_close();
-      if (!document.location.href.endsWith(pageName + ".html")) {
-        document.location.href = pageName + ".html";
+      if (document.getElementById(pageName).style.display !== "block") {
+        for (let i = 0; i < this.pages.length; i++) {
+          document.getElementById(this.pages[i].name).style.display = "none";
+        }
+        this.activePage = pageName;
+        document.getElementById(pageName).style.display = "block";
       }
     },
     w3_close: function() {
