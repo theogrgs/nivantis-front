@@ -1,0 +1,17 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Nivantis",
+  "short_name": "Nivantis",
+  "version": "io.cordova.hellocordova",
+  "description": "Nivantis App for DMOs, PSBR B3 EPSI 2019",
+  "author": "MSPR TEAM",
+  "icons": [
+    {
+      "src": "/static/logo.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "start_url": "index.html"
+}
