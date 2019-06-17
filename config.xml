@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="fr.epsi.mspr.dev.nivantis" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Nivantis</name>
     <description>
         Nivantis App for DMOs, PSBR B3 EPSI 2019
@@ -8,7 +8,7 @@
         MSPR TEAM
     </author>
     <content src="index.html" />
-    <icon src="/static/logo.png"/>
+    <icon src="static/logo.png"/>
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

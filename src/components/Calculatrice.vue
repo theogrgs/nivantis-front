@@ -161,18 +161,16 @@ export default {
   },
   methods: {
     calcPanet: function() {
-      this.panet =
-        parseFloat(this.pabrut) * (1 - parseFloat(this.tauxremise) / 100.0);
+      this.panet = (parseFloat(this.pabrut) * (1 - parseFloat(this.tauxremise) / 100.0)).toFixed(2);
     },
     calcTauxremise: function() {
-      this.tauxremise =
-        (1 - parseFloat(this.panet) / parseFloat(this.pabrut)) * 100.0;
+      this.tauxremise = (((1 - parseFloat(this.panet) / parseFloat(this.pabrut)) * 100.0)).toFixed(2);
     },
     calcPvnet: function() {
-      this.pvnet = parseFloat(this.panet) * parseFloat(this.coeff);
+      this.pvnet = (parseFloat(this.panet) * parseFloat(this.coeff)).toFixed(2);
     },
     calcCoeff: function() {
-      this.coeff = parseFloat(this.pvnet) / parseFloat(this.panet);
+      this.coeff = (parseFloat(this.pvnet) / parseFloat(this.panet)).toFixed(2);
     }
   }
 };
