@@ -112,7 +112,7 @@ export default {
     return {
       panet: 0,
       tauxremise: 0,
-      pabrut: 2,
+      pabrut: 0,
       pvnet: 0,
       coeff: 0
     };

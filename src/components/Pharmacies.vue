@@ -77,11 +77,23 @@ export default {
 #map {
   display: none;
 }
-
 #refresh {
-  position: fixed;
+  position:fixed;
   padding: 10px;
   bottom: 15px;
   right: 15px;
 }
+@media(max-width: 600px){
+  #refresh{
+    position:fixed;
+    padding: 10px;
+    top: 15px;
+    bottom: auto;
+    right: 15px;
+  }
+  #pharmaciesList{
+    margin-bottom:200px!important; 
+  }
+}
+
 </style>
