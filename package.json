@@ -16,6 +16,7 @@
     "cordova-browser": "^6.0.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "vue": "^2.5.2",
+    "vuetify": "^1.5.14",
     "w3-css": "^4.1.0"
   },
   "devDependencies": {

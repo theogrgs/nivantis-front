@@ -3,9 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import 'w3-css/w3.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
-
+Vue.use(Vuetify)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

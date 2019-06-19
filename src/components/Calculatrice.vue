@@ -110,11 +110,11 @@
 export default {
   data: function() {
     return {
-      panet: 0,
-      tauxremise: 0,
-      pabrut: 0,
-      pvnet: 0,
-      coeff: 0
+      panet:"",
+      tauxremise:"",
+      pabrut:"",
+      pvnet:"",
+      coeff:""
     };
   },
   computed: {

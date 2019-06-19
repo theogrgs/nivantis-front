@@ -1,77 +1,89 @@
 <template>
   <div>
-    <div class="w3-top w3-container w3-indigo w3-cell-row w3-card" id="topbar">
-      <button id="openNav" class="w3-button w3-xlarge w3-cell" v-on:click="w3_open">&#9776;</button>
-      <h4 class="w3-cell" style="padding:8px;">{{title}} - {{activePage.charAt(0).toUpperCase()+activePage.slice(1)}}</h4>
-    </div>
-    <br><br>
-    <div class="w3-top w3-sidebar w3-indigo w3-card-4 w3-animate-left" style="display:none;z-index:4;width:auto" id="mySidebar">
-      <div class="w3-bar w3-indigo">
-        <button v-on:click="w3_close" class="w3-bar-item w3-button w3-right w3-padding-8" title="close Sidebar">&times;</button>
-      </div>
-      <div class="w3-bar-block">
-        <a class="w3-bar-item w3-button" :key="page.name" v-for="page in pages" v-on:click="goToPage(page.name)">
-          <i class="material-icons">{{page.icon}}</i>
-          {{page.name.charAt(0).toUpperCase() + page.name.slice(1)}}
-        </a>
-      </div>        
-    </div>
-    <div class="w3-overlay w3-animate-opacity" v-on:click="w3_close" id="myOverlay"></div>
+    <v-toolbar id="navbig" fixed dark class="w3-hide-small w3-indigo">
+      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title class="white--text">Nivantis - {{this.activePage}}</v-toolbar-title>
+    </v-toolbar>
+    <v-navigation-drawer class="w3-hide-small w3-indigo" v-model="drawer" dark absolute temporary>
+      <v-list class="pa-1">
+        <v-list-tile>
+          <v-list-tile-content>Nivantis</v-list-tile-content>
+          <v-list-tile-action @click.stop="drawer = !drawer">
+            <v-btn flat icon class="w3-indigo">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list class="pt-0">
+        <v-list-tile v-for="page in pages" :key="page.name" @click="goToB(page.name)">
+          <v-list-tile-action>
+            <v-icon>{{page.icon}}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{page.name}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-bottom-nav
+      id="navmobile"
+      class="w3-indigo w3-hide-large w3-hide-medium"
+      dark
+      :value="true"
+      fixed
+      shift
+    >
+      <v-btn :key="page.name" v-for="page in pages" v-on:click="goTo(page.name)" dark grow>
+        <span>{{page.name}}</span>
+        <v-icon>{{page.icon}}</v-icon>
+      </v-btn>
+    </v-bottom-nav>
   </div>
 </template>
 
 <script>
 export default {
-    props: ['title', 'active', 'pages'],
-    data: function(){
-      return{
-        activePage : this.active
-      }
-    },
-    methods: {
-      w3_open: function () {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-      },
-      goToPage: function (pageName) {
-        this.w3_close();
-        if (!document.getElementById(pageName).classList.contains('w3-show')) {
-          for(let i=0; i<this.pages.length; i++){
-            document.getElementById(this.pages[i].name).classList.remove('w3-show');
-            document.getElementById(this.pages[i].name).classList.add('w3-hide');
-          }
-          this.activePage = pageName;
-          document.getElementById(pageName).classList.add('w3-show');
-          document.getElementById(pageName).classList.remove('w3-hide');
+  props: ["title", "active", "pages"],
+  data: function() {
+    return {
+      activePage: this.active,
+      drawer: null
+    };
+  },
+  mounted: function() {
+    document.getElementById(
+      "main"
+    ).style.marginBottom = document.getElementById("navmobile").style.height;
+    document.getElementById("main").style.marginTop = document.getElementById(
+      "navbig"
+    ).style.height;
+  },
+  methods: {
+    goTo: function(pageName) {
+      if (!document.getElementById(pageName).classList.contains("w3-show")) {
+        for (let i = 0; i < this.pages.length; i++) {
+          document
+            .getElementById(this.pages[i].name)
+            .classList.remove("w3-show");
+          document.getElementById(this.pages[i].name).classList.add("w3-hide");
         }
-      },
-      w3_close: function () {
-        document.getElementById("myOverlay").style.display = "none";
-        document.getElementById("mySidebar").classList.add('animate-right');
-        document.getElementById("mySidebar").addEventListener('animationend',function(){
-          if(this.classList.contains('animate-right')){
-            this.classList.remove('animate-right');
-            this.style.display = "none";
-          }
-        });
-        
-      }
+        this.activePage = pageName;
+        document.getElementById(pageName).classList.add("w3-show");
+        document.getElementById(pageName).classList.remove("w3-hide");
+      }      
+    },
+    goToB: function(pageName){
+      this.goTo(pageName);
+      this.drawer = !this.drawer;
     }
   }
+};
 </script>
 
 <style scoped>
-.animate-right{
-  animation: menuclose 0.4s;
-}
-@keyframes menuclose {
-  from{
-    left:0;
-    opacity:1
-  } 
-  to{
-    left:-300px;
-    opacity:0
-    }
+* {
+  text-transform: none !important;
 }
 </style>
