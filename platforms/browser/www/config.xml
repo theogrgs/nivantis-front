@@ -9,7 +9,7 @@
     </author>
     <content src="index.html" />
     <icon src="static/logo.png" />
-    <access origin="*" />
+    <access origin="" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

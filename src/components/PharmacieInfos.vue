@@ -1,49 +1,48 @@
 <template>
-  <div class="w3-card w3-section w3-round w3-padding">
-    <button class="w3-button w3-block w3-light-grey" v-on:click="toggle(pharmaid)">{{nom}}</button>
-    <div :id="pharmaid" class="w3-hide w3-center w3-animate-opacity">
-      <header class="w3-container">
-        <h5 class="w3-left">{{nom}}</h5>
-      </header>
-      <div class="w3-container">
-        Gérant : {{gerant}}
-      </div>
-      <footer class="w3-container">
-        <p class="w3-left"><i class="material-icons w3-cell-bottom">place</i>{{adresse}}</p>
-        <p class="w3-right">{{distance_display}}</p>
-      </footer>
-    </div>
-  </div>
+  <v-card>
+    <v-card-title>
+      <h5>Gérant : {{gerant}}</h5>
+    </v-card-title>
+    <v-card-text>
+      <p class="text-xs-center"></p>
+    </v-card-text>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex grow>
+          <v-icon color="red">place</v-icon>
+          {{adresse}}
+        </v-flex>
+        <v-flex shrink>
+          <v-icon color="green">directions_walk</v-icon>
+          {{distance_display}}
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
 export default {
-  props: ["pharmaid", "nom","lat","lon","gerant","adresse"],
+  props: ["pharmaid", "nom", "lat", "lon", "gerant", "adresse","devlat","devlon"],
   computed: {
-    distance_display : function(){
-      const distance = this.distance(this.lat,this.lon,this.$parent.lat,this.$parent.lon,'K');
+    distance_display: function() {
+      const distance = this.distance(
+        this.lat,
+        this.lon,
+        this.devlat,
+        this.devlon,
+        "K"
+      );
       var display = "";
-      if (distance<1.00){
-        display=`${Math.round(distance*1000)}m`;
+      if (distance < 1.0) {
+        display = `${Math.round(distance * 1000)}m`;
       } else {
-        display=`${distance}km`;
+        display = `${distance}km`;
       }
       return display;
     }
   },
   methods: {
-    toggle(id) {
-      console.log(this.$parent.lat);
-      console.log(this.$parent.lon);
-      console.log(this.lat);
-      console.log(this.lon);
-      const x = document.getElementById(id);
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
-    },
     distance: function(lat1, lon1, lat2, lon2, unit) {
       if (lat1 == lat2 && lon1 == lon2) {
         return 0;

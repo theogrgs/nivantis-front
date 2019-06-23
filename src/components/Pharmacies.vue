@@ -1,99 +1,112 @@
 <template>
   <div>
-    <div id="map"></div>
-    <div id="pharmaciesList" class="w3-container w3-section">
-      <pharma-infos
-        v-for="pharma in pharmas"
-        :key="pharma.name"
-        :pharmaid="'pharma'+pharmas.indexOf(pharma)"
-        :nom="pharma.name"
-        gerant="Jean de la Molfesse"
-        :lat="pharma.geometry.location.lat()"
-        :lon="pharma.geometry.location.lng()"
-        :adresse="pharma.vicinity"
-      ></pharma-infos>
-    </div>
-    <v-btn id="refresh" v-on:click="searchPosition()" fab dark class="w3-indigo">
+    <div id="map" class="hidden-xs-and-up"></div>
+    <v-container id="pharmaciesList">
+      <pull-to :top-load-method="searchPosition" :top-config="pull">
+        <v-container id="pharmaciesList">
+          <v-layout column>
+            <v-expansion-panel popout expand>
+              <v-expansion-panel-content
+                v-for="pharma in pharmas"
+                :key="pharma.name"
+                expand-icon="local_pharmacy"
+              >
+                <template v-slot:header>
+                  <div>{{pharma.name}}</div>
+                </template>
+                <pharma-infos
+                  :devlat="lat"
+                  :devlon="lon"
+                  :pharmaid="'pharma'+pharmas.indexOf(pharma)"
+                  :nom="pharma.name"
+                  gerant="Jean de la Molfesse"
+                  :lat="pharma.geometry.location.lat"
+                  :lon="pharma.geometry.location.lng"
+                  :adresse="pharma.vicinity"
+                ></pharma-infos>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-layout>
+        </v-container>
+      </pull-to>
+    </v-container>
+    <v-btn id="refresh" v-on:click="searchPosition" fab dark class="indigo hidden-sm-and-down">
       <v-icon dark>refresh</v-icon>
     </v-btn>
-    <!--<i
-      id="refresh"
-      class="material-icons w3-button w3-card w3-circle w3-indigo w3-xlarge"
-      v-on:click="searchPosition()"
-    >refresh</i>-->
   </div>
 </template>
 
 <script>
 import PharmaInfos from "./PharmacieInfos";
+import PullTo from "vue-pull-to";
 
 export default {
   data: function() {
     return {
       lat: 0,
       lon: 0,
-      pharmas: []
+      pharmas: [],
+      pull: {
+        pullText: "Tirez un peu plus", // The text is displayed when you pull down
+        triggerText: "Relâchez pour rafraichir", // The text that appears when the trigger distance is pulled down
+        loadingText: "Chargement...", // The text in the load
+        doneText: "Terminé !", // Load the finished text
+        failText: "Erreur :(", // Load failed text
+        loadedStayTime: 100, // Time to stay after loading ms
+        stayDistance: 50, // Trigger the distance after the refresh
+        triggerDistance: 70 // Pull down the trigger to trigger the distance
+      }
     };
   },
   components: {
-    "pharma-infos": PharmaInfos
-  },
-  computed: {
-    myPosition: function() {
-      return new google.maps.LatLng(this.lat, this.lon);
-    },
-    map: function() {
-      return new google.maps.Map(document.getElementById("map"), {
-        center: this.myPosition,
-        zoom: 15
-      });
-    },
-    service: function() {
-      return new google.maps.places.PlacesService(this.map);
-    }
+    PharmaInfos,
+    PullTo
   },
   methods: {
-    onSuccess: function(position) {
-      console.log("Getting current position - Success : \n" + position);
+    geolocationSuccess: function(position) {
       this.lat = position.coords.latitude;
       this.lon = position.coords.longitude;
+      console.log(this.lat);
       this.pharmas = this.searchPharmas();
     },
-    onError: function(error) {
-      console.log("Getting current position - Error : \n" + error);
+    geolocationError: function(error) {
+      console.log(error);
       if (error.code == 3) {
         alert(
           "Veuillez activer la géolocalisation géolocalisatrice de la géolocalité svp :)"
         );
       } else {
-        alert(
-          `code: ${error.code}\nmessage: ${error.message}\n`
-        );
+        alert(`code: ${error.code}\nmessage: ${error.message}\n`);
       }
     },
-    searchPosition: function() {
-      console.log("Getting device position...\n");
-      navigator.geolocation.getCurrentPosition(this.onSuccess, this.onError, {
-        timeout: 2500
-      });
+    searchPosition: function(loaded) {
+      navigator.geolocation.getCurrentPosition(
+        this.geolocationSuccess,
+        this.geolocationError,
+        { timeout: 5000 }
+      );
+      loaded("done");
     },
     searchPharmas: function() {
       const res = [];
-      this.service.nearbySearch({
-          location: this.myPosition,
-          type: ["pharmacy"],
-          rankBy: google.maps.places.RankBy.DISTANCE
-        },
-        function(results, status) {
-          console.log(results);
-          if (status !== "OK") {
-            alert(status);
-          }
-          for (let i = 0; i < results.length; i++) {
-            res.push(results[i]);
-          }
+      fetch("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+this.lat+","+this.lon+"&rankby=distance&type=pharmacy&key=AIzaSyDxWZwNUysm95GtigT_oznJgeayse8wq2s")
+      .then(function(response) {
+        if (response.ok) {
+          response.json().then(function(json) {
+            for (let i = 0; i < json.results.length; i++) {
+              res.push(json.results[i]);
+            }
+          });
+        } else {
+          console.log("Mauvaise réponse du réseau");
         }
-      );
+      })
+      .catch(function(error) {
+        console.log(error);
+        console.log(
+          "Il y a eu un problème avec l'opération fetch: " + error.message
+        );
+      });
       return res;
     }
   }
@@ -101,9 +114,6 @@ export default {
 </script>
 
 <style>
-#map {
-  display: none;
-}
 #refresh {
   position: fixed;
   padding: 10px;
@@ -117,9 +127,6 @@ export default {
     top: 15px;
     bottom: auto;
     right: 15px;
-  }
-  #pharmaciesList {
-    margin-bottom: 200px !important;
   }
 }
 </style>

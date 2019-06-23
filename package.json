@@ -12,10 +12,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@google/maps": "^0.5.5",
+    "axios": "^0.19.0",
     "cordova-android": "^8.0.0",
     "cordova-browser": "^6.0.0",
+    "cordova-custom-config": "^5.1.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "vue": "^2.5.2",
+    "vue-pull-to": "^0.1.7",
     "vuetify": "^1.5.14",
     "w3-css": "^4.1.0"
   },
@@ -86,7 +90,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-custom-config": {}
     },
     "platforms": [
       "browser",

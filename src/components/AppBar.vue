@@ -1,15 +1,15 @@
 <template>
   <div>
-    <v-toolbar id="navbig" fixed dark class="w3-hide-small w3-indigo">
+    <v-toolbar id="navbig" fixed dark class="indigo hidden-xs-only">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">Nivantis - {{this.activePage}}</v-toolbar-title>
     </v-toolbar>
-    <v-navigation-drawer class="w3-hide-small w3-indigo" v-model="drawer" dark absolute temporary>
+    <v-navigation-drawer class="indigo hidden-xs-only" v-model="drawer" dark absolute temporary>
       <v-list class="pa-1">
         <v-list-tile>
           <v-list-tile-content>Nivantis</v-list-tile-content>
           <v-list-tile-action @click.stop="drawer = !drawer">
-            <v-btn flat icon class="w3-indigo">
+            <v-btn flat icon class="indigo">
               <v-icon>close</v-icon>
             </v-btn>
           </v-list-tile-action>
@@ -29,11 +29,10 @@
     </v-navigation-drawer>
     <v-bottom-nav
       id="navmobile"
-      class="w3-indigo w3-hide-large w3-hide-medium"
+      class="indigo hidden-sm-and-up"
       dark
       :value="true"
       fixed
-      shift
     >
       <v-btn :key="page.name" v-for="page in pages" v-on:click="goTo(page.name)" dark grow>
         <span>{{page.name}}</span>
@@ -52,26 +51,19 @@ export default {
       drawer: null
     };
   },
-  mounted: function() {
-    document.getElementById(
-      "main"
-    ).style.marginBottom = document.getElementById("navmobile").style.height;
-    document.getElementById("main").style.marginTop = document.getElementById(
-      "navbig"
-    ).style.height;
-  },
   methods: {
     goTo: function(pageName) {
-      if (!document.getElementById(pageName).classList.contains("w3-show")) {
+      if (!document.getElementById(pageName).classList.contains("d-block")) {
         for (let i = 0; i < this.pages.length; i++) {
           document
             .getElementById(this.pages[i].name)
-            .classList.remove("w3-show");
-          document.getElementById(this.pages[i].name).classList.add("w3-hide");
+            .classList.remove("d-block");
+          document.getElementById(this.pages[i].name).classList.add("d-none");
         }
         this.activePage = pageName;
-        document.getElementById(pageName).classList.add("w3-show");
-        document.getElementById(pageName).classList.remove("w3-hide");
+        document.getElementById(pageName).classList.add("d-block");
+        document.getElementById(pageName).classList.remove("d-none");
+        this.mounted;
       }      
     },
     goToB: function(pageName){

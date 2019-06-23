@@ -1,120 +1,59 @@
 <template>
-  <div>
-    <div class="w3-row w3-section w3-container">
-      <div class="w3-cell" style="width:100%">
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:auto; position:sticky; top:100%">
-            <i class="material-icons">euro_symbol</i>
-          </div>
-          <div class="w3-rest">
-            <label>Prix d'achat net</label>
-            <input v-model="panet" class="w3-input" type="number">
-          </div>
-        </div>
-      </div>
-      <div class="w3-cell w3-cell-middle w3-container">
-        <button
-          :disabled="panetIF"
-          class="w3-button w3-round w3-indigo"
-          v-on:click="calcPanet"
-          style="padding: 6px 8px;"
-        >Calculer</button>
-      </div>
-    </div>
-    <div class="w3-row w3-section w3-container">
-      <div class="w3-cell" style="width:100%">
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:auto; position:sticky; top:100%">
-            <i class="material-icons">euro_symbol</i>
-          </div>
-          <div class="w3-rest">
-            <label>Prix d'achat brut</label>
-            <input v-model="pabrut" class="w3-input" type="number">
-          </div>
-        </div>
-      </div>
-      <div class="w3-cell w3-cell-middle w3-container">
-        <div
-          style="visibility: hidden; padding:6px 8px;"
-          class="w3-button w3-round w3-indigo"
-        >Calculer</div>
-      </div>
-    </div>
-    <div class="w3-row w3-section w3-container">
-      <div class="w3-cell" style="width:100%">
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:auto; position:sticky; top:100%">
-            <i class="material-icons">euro_symbol</i>
-          </div>
-          <div class="w3-rest">
-            <label>Prix de vente net</label>
-            <input v-model="pvnet" class="w3-input" type="number">
-          </div>
-        </div>
-      </div>
-      <div class="w3-cell w3-cell-middle w3-container">
-        <button
-          :disabled="pvnetIF"
-          class="w3-button w3-round w3-indigo"
-          v-on:click="calcPvnet"
-          style="padding: 6px 8px;"
-        >Calculer</button>
-      </div>
-    </div>
-    <div class="w3-row w3-section w3-container">
-      <div class="w3-cell" style="width: 100%">
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:auto; position:sticky; top:100%">
-            <i class="material-icons">loyalty</i>
-          </div>
-          <div class="w3-rest">
-            <label>Taux de remise (%)</label>
-            <input v-model="tauxremise" class="w3-input" type="number">
-          </div>
-        </div>
-      </div>
-      <div class="w3-cell w3-cell-middle w3-container">
-        <button
-          :disabled="tauxremiseIF"
-          class="w3-button w3-round w3-indigo"
-          v-on:click="calcTauxremise"
-          style="padding: 8px 8px;"
-        >Calculer</button>
-      </div>
-    </div>
-    <div class="w3-row w3-section w3-container">
-      <div class="w3-cell" style="width: 100%">
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:auto; position:sticky; top:100%">
-            <i class="material-icons">cancel</i>
-          </div>
-          <div class="w3-rest">
-            <label>Coefficient multiplicateur</label>
-            <input v-model="coeff" class="w3-input" type="number">
-          </div>
-        </div>
-      </div>
-      <div class="w3-cell w3-cell-middle w3-container">
-        <button
-          :disabled="coeffIF"
-          class="w3-button w3-round w3-indigo"
-          v-on:click="calcCoeff"
-          style="padding: 6px 8px;"
-        >Calculer</button>
-      </div>
-    </div>
-  </div>
+  <v-container fluid>
+    <v-layout row>
+      <v-flex grow pa-1>
+        <v-text-field color="indigo" type="number" label="Prix d'achat net" prepend-inner-icon="euro_symbol" v-model="panet"></v-text-field>
+      </v-flex>
+      <v-flex shrink pa-1>
+        <v-btn color="indigo" v-on:click="calcPanet" v-if="!panetIF" fab dark><v-icon>pageview</v-icon></v-btn>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex grow pa-1>
+        <v-text-field color="indigo" type="number" label="Prix d'achat brut" prepend-inner-icon="euro_symbol" v-model="pabrut"></v-text-field>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex grow pa-1>
+        <v-text-field color="indigo" type="number" label="Prix de vente net" prepend-inner-icon="euro_symbol" v-model="pvnet"></v-text-field>
+      </v-flex>
+      <v-flex shrink pa-1>
+        <v-btn color="indigo" v-on:click="calcPvnet" v-if="!pvnetIF" fab dark><v-icon>pageview</v-icon></v-btn>        
+      </v-flex>
+    </v-layout>
+    
+    <v-layout row>
+      <v-flex grow pa-1>
+        <v-text-field color="indigo" type="number" label="Taux de remise (%)" prepend-inner-icon="loyalty" v-model="tauxremise"></v-text-field>
+      </v-flex>
+      <v-flex shrink pa-1>
+        <v-btn color="indigo" v-on:click="calcTauxremise" v-if="!tauxremiseIF" fab dark><v-icon>pageview</v-icon></v-btn>
+
+      </v-flex>
+    </v-layout>
+    
+    <v-layout row>
+      <v-flex grow pa-1>
+        <v-text-field color="indigo" type="number" label="Coefficient multiplicateur" prepend-inner-icon="cancel" v-model="coeff"></v-text-field>
+      </v-flex>
+      <v-flex shrink pa-1>
+        <v-btn color="indigo" v-on:click="calcCoeff" v-if="!coeffIF" fab dark><v-icon>pageview</v-icon></v-btn>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      panet:"",
-      tauxremise:"",
-      pabrut:"",
-      pvnet:"",
-      coeff:""
+      panet: "",
+      tauxremise: "",
+      pabrut: "",
+      pvnet: "",
+      coeff: ""
     };
   },
   computed: {
@@ -161,10 +100,16 @@ export default {
   },
   methods: {
     calcPanet: function() {
-      this.panet = (parseFloat(this.pabrut) * (1 - parseFloat(this.tauxremise) / 100.0)).toFixed(2);
+      this.panet = (
+        parseFloat(this.pabrut) *
+        (1 - parseFloat(this.tauxremise) / 100.0)
+      ).toFixed(2);
     },
     calcTauxremise: function() {
-      this.tauxremise = (((1 - parseFloat(this.panet) / parseFloat(this.pabrut)) * 100.0)).toFixed(2);
+      this.tauxremise = (
+        (1 - parseFloat(this.panet) / parseFloat(this.pabrut)) *
+        100.0
+      ).toFixed(2);
     },
     calcPvnet: function() {
       this.pvnet = (parseFloat(this.panet) * parseFloat(this.coeff)).toFixed(2);

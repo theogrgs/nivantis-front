@@ -7,10 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "fr.epsi.mspr.dev.nivantis"
+    },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "fr.epsi.mspr.dev.nivantis"
     },
-    "cordova-plugin-whitelist": {
+    "cordova-custom-config": {
       "PACKAGE_NAME": "fr.epsi.mspr.dev.nivantis"
     }
   },
