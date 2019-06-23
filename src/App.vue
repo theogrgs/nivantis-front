@@ -5,13 +5,13 @@
     </div>
 
     <div id="main">
-      <div id="Calculatrice" class="w3-animate-opacity d-block">
+      <div id="Calculatrice" class="animate-opacity d-block">
         <calculatrice></calculatrice>
       </div>
-      <div id="Pharmacies" class="w3-animate-opacity d-none">
+      <div id="Pharmacies" class="animate-opacity d-none">
         <pharmacies></pharmacies>
       </div>
-      <div id="Formulaires" class="w3-animate-opacity d-none">
+      <div id="Formulaires" class="animate-opacity d-none">
         <formulaires></formulaires>
       </div>
     </div>
@@ -46,6 +46,13 @@ export default {
     margin-top:2px;
     margin-bottom: 56px;
   }
+}
+.animate-opacity{
+  animation:opac 0.8s
+}
+@keyframes opac{
+  from{opacity:0}
+  to{opacity:1}
 }
 </style>
 
