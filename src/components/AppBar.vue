@@ -64,7 +64,7 @@ export default {
         document.getElementById(pageName).classList.add("d-block");
         document.getElementById(pageName).classList.remove("d-none");
         this.mounted;
-      }      
+      }
     },
     goToB: function(pageName){
       this.goTo(pageName);

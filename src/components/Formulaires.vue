@@ -12,8 +12,71 @@
       prepend-icon="color_lens"
       box
     ></v-select>
-    <createur-question :color="color" type="cm"></createur-question>
-    <createur-question :color="color" type="cm"></createur-question>
+    <v-card v-for="question in questions" :key="questions.indexOf(question)" class="mb-2">
+      <v-container>
+        <v-layout row wrap>
+          <v-flex grow pa-2>
+            <v-textarea
+              rows="1"
+              auto-grow
+              v-model="question.title"
+              :color="color"
+              label="Titre de la question"
+            />
+          </v-flex>
+          <v-flex shrink pa-2>
+            <v-select
+              :items="types"
+              item-value="value"
+              item-text="label"
+              :prepend-icon="prependIcon(question.type)"
+              :color="color"
+              v-model="question.type"
+            />
+          </v-flex>
+        </v-layout>
+        <!--Si réponse ouverte, champ de texte désactivé-->
+        <v-text-field v-if="question.type=='qo'" value="Réponse" disabled/>
+        <!--Si choix multiples, liste de choix à paramétrer-->
+        <div v-if="question.type=='cm'">
+          <v-layout v-for="choice in question.choices" :key="question.choices.indexOf(choice)" row>
+            <v-text-field
+              prepend-icon="radio_button_unchecked"
+              :label="'Option '+(question.choices.indexOf(choice)+1)"
+              v-model="choice.text"
+              :color="color"
+            ></v-text-field>
+            <v-btn flat icon :color="color" @click="cmDelOpt(question,choice)">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-layout>
+          <v-layout row>
+            <v-icon>radio_button_unchecked</v-icon>
+            <v-btn flat icon :color="color" @click="cmNewOpt(question)">
+              <v-icon>plus_one</v-icon>
+            </v-btn>
+          </v-layout>
+        </div>
+      </v-container>
+      <v-card-actions>
+        <v-spacer/>
+        <v-btn flat icon :color="color" @click="delQuestion(question)">
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-btn id="save" fab dark color="green">
+      <v-icon>cloud_upload</v-icon>
+    </v-btn>
+    <v-btn
+      bottom
+      dark
+      color="indigo"
+      @click="addQuestion"
+      :style="{left: '50%', transform:'translateX(-50%)'}"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -24,14 +87,17 @@ export default {
     return {
       desc: "",
       title: "",
-      color: "indigo",
+      color: "purple",
       questions: [
         {
           type: "cm",
-          texte: "Que vaut la pharmacie bit",
-          choix: ["Bof", "Ok", "Top"]
-        },
-        { type: "ouv", texte: "Que vaut la pharmacie bit ?" }
+          title: "",
+          choices: [{ text: "" }]
+        }
+      ],
+      types: [
+        { value: "cm", label: "Choix multiples", icon: "radio_button_checked" },
+        { value: "qo", label: "Question ouverte", icon: "notes" }
       ],
       colors: [
         { value: "red", label: "Rouge" },
@@ -44,7 +110,7 @@ export default {
         { value: "cyan", label: "Cyan" },
         { value: "teal", label: 'Bleu "sarcelle"' },
         { value: "green", label: "Vert" },
-        { value: "light-green", label: "Vert foncé" },
+        { value: "light-green", label: "Vert clair" },
         { value: "lime", label: "Citron" },
         { value: "yellow", label: "Jaune" },
         { value: "amber", label: "Ambre" },
@@ -59,9 +125,50 @@ export default {
   },
   components: {
     CreateurQuestion
+  },
+  methods: {
+    addQuestion() {
+      this.questions.push({ type: "cm", title: "", choices: [{ text: "" }] });
+    },
+    delQuestion(q) {
+      this.questions.splice(this.questions.indexOf(q), 1);
+    },
+    cmNewOpt(q, o) {
+      this.questions[this.questions.indexOf(q)].choices.push({ text: "" });
+    },
+    cmDelOpt(q, o) {
+      if (q.choices.length > 1) {
+        this.questions[this.questions.indexOf(q)].choices.splice(
+          this.questions[this.questions.indexOf(q)].choices.indexOf(o),
+          1
+        );
+      }
+    },
+    prependIcon: function(t) {
+      if (t == "cm") {
+        return "radio_button_checked";
+      } else {
+        return "notes";
+      }
+    }
   }
 };
 </script>
 
 <style>
+#save {
+  position: fixed;
+  padding: 10px;
+  bottom: 15px;
+  right: 15px;
+}
+@media (max-width: 600px) {
+  #save {
+    position: fixed;
+    padding: 10px;
+    top: 15px;
+    bottom: auto;
+    right: 15px;
+  }
+}
 </style>
