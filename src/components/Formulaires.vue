@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import CreateurQuestion from "./CreateurQuestion";
 export default {
   data: function() {
     return {
@@ -122,9 +121,6 @@ export default {
         { value: "black", label: "Noir" }
       ]
     };
-  },
-  components: {
-    CreateurQuestion
   },
   methods: {
     addQuestion() {
