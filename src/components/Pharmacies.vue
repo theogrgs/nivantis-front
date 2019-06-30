@@ -84,6 +84,16 @@ export default {
           if (response.ok) {
             response.json().then(function(json) {
               for (let i = 0; i < json.results.length; i++) {
+                /*
+                fetch(`http://192.168.20.20/officine?latitude=${json.results[i].geometry.location.lat}
+                &longitude=${json.results[i].geometry.location.lon}`).then(function(response){
+                  if (response.ok){
+                    response.json().then(function(json){
+                      res.push(json.results);
+                    })
+                  }
+                })
+                */
                 res.push(json.results[i]);
               }
             });
@@ -104,19 +114,4 @@ export default {
 </script>
 
 <style>
-#refresh {
-  position: fixed;
-  padding: 10px;
-  bottom: 15px;
-  right: 15px;
-}
-@media (max-width: 600px) {
-  #refresh {
-    position: fixed;
-    padding: 10px;
-    top: 15px;
-    bottom: auto;
-    right: 15px;
-  }
-}
 </style>

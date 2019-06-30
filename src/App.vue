@@ -1,7 +1,11 @@
 <template>
   <v-app id="app">
     <div id="appBar">
-      <app-bar title="Nivantis" :pages="[{name:'Pharmacies',icon:'local_pharmacy'},{name:'Calculatrice',icon:'dialpad'},{name:'Formulaires',icon:'ballot'}]" active="Calculatrice"></app-bar> 
+      <app-bar title="Nivantis" :pages="[
+      {name:'Pharmacies',icon:'local_pharmacy'},
+      {name:'Calculatrice',icon:'dialpad'},
+      {name:'Formulaires',icon:'ballot'},
+      {name:'Sondages',icon:'assignment'}]" active="Calculatrice"></app-bar> 
     </div>
 
     <div id="main">
@@ -14,6 +18,9 @@
       <div id="Formulaires" class="animate-opacity d-none">
         <formulaires></formulaires>
       </div>
+      <div id="Sondages" class="animate-opacity d-none">
+        <sondages></sondages>
+      </div>
     </div>
   </v-app>
 </template>
@@ -23,7 +30,7 @@ import AppBar from './components/AppBar';
 import Calculatrice from "./components/Calculatrice";
 import Pharmacies from "./components/Pharmacies";
 import Formulaires from './components/Formulaires';
-
+import Sondages from "./components/Sondages";
 
 export default {
   name: "App",
@@ -31,7 +38,8 @@ export default {
     AppBar,
     Calculatrice,
     Pharmacies,
-    Formulaires
+    Formulaires,
+    Sondages
   }
 };
 </script>

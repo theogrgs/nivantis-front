@@ -21,7 +21,7 @@
               auto-grow
               v-model="question.title"
               :color="color"
-              label="Titre de la question"
+              :label="'Question '+(questions.indexOf(question)+1)+' : Intitulé'"
             />
           </v-flex>
           <v-flex shrink pa-2>
@@ -65,12 +65,13 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <v-btn id="save" fab dark color="green">
+    <v-btn id="save" fab dark color="green" @click="uploadForm">
       <v-icon>cloud_upload</v-icon>
     </v-btn>
     <v-btn
       bottom
       dark
+      small
       color="indigo"
       @click="addQuestion"
       :style="{left: '50%', transform:'translateX(-50%)'}"
@@ -95,8 +96,8 @@ export default {
         }
       ],
       types: [
-        { value: "cm", label: "Choix multiples", icon: "radio_button_checked" },
-        { value: "qo", label: "Question ouverte", icon: "notes" }
+        { value: "cm", label: "Choix multiples" },
+        { value: "qo", label: "Question ouverte" }
       ],
       colors: [
         { value: "red", label: "Rouge" },
@@ -146,6 +147,34 @@ export default {
       } else {
         return "notes";
       }
+    },
+    generateForm: function() {
+      let form = {};
+      form.title = this.title;
+      form.desc = this.desc;
+      form.color = this.color;
+      form.questions = [];
+      for (let i = 0; i < this.questions.length; i++) {
+        form.questions.push({
+          question: this.questions[i],
+          reponse: { text: "" }
+        });
+      }
+      const formStr = JSON.stringify(form);
+      return formStr;
+    },
+    uploadForm: function() {
+      let actual = localStorage.getItem("forms");
+      const f = this.generateForm();
+      if (actual) {
+        actual = JSON.parse(actual);
+        actual.push(this.generateForm());
+        localStorage.setItem("forms",JSON.stringify(actual));
+      } else {
+        const forms=[f];
+        localStorage.setItem("forms",JSON.stringify(forms));
+      }
+      alert("Formulaire enregistré");
     }
   }
 };
