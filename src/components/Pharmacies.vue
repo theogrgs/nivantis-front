@@ -16,11 +16,14 @@
               :devlat="lat"
               :devlon="lon"
               :pharmaid="'pharma'+pharmas.indexOf(pharma)"
-              :nom="pharma.name"
-              gerant="Jean de la Molfesse"
-              :lat="pharma.geometry.location.lat"
-              :lon="pharma.geometry.location.lng"
-              :adresse="pharma.vicinity"
+              :nom="pharma.raison_sociale"
+              :gerant="pharma.nom_gerant"
+              :lat="pharma.latitude"
+              :lon="pharma.longitude"
+              :adresse="pharma.adresse"
+              :ville="pharma.ville"
+              :telephone="pharma.telephone"
+              :mail="pharma.mail"
             ></pharma-infos>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -84,17 +87,33 @@ export default {
           if (response.ok) {
             response.json().then(function(json) {
               for (let i = 0; i < json.results.length; i++) {
-                /*
-                fetch(`http://192.168.20.20/officine?latitude=${json.results[i].geometry.location.lat}
-                &longitude=${json.results[i].geometry.location.lon}`).then(function(response){
-                  if (response.ok){
-                    response.json().then(function(json){
-                      res.push(json.results);
+                //console.log(json.results[i].geometry.location.lat);
+                //console.log(json.results[i].geometry.location.lng);
+                //${json.results[i].geometry.location.lat}
+                //${json.results[i].geometry.location.lng}
+                fetch(`http://192.168.43.27:80/officine?latitude=${json.results[i].geometry.location.lat}&longitude=${json.results[i].geometry.location.lng}`).then(function(resp){
+                  console.log(resp);
+                  if (resp.ok){
+                    resp.json().then(function(js){
+                      console.log(js);
+                      res.push(js);
                     })
+                  } else {
+                    let goo = json.results[i];
+                    console.log(goo)
+                    goo.adresse = goo.vicinity;
+                    goo.nom_gerant = "Inconnu";
+                    goo.telephone = "Inconnu";
+                    goo.ville = "";
+                    goo.mail = "Inconnu";
+                    goo.raison_sociale = goo.name;
+                    goo.latitude = goo.geometry.location.lat;
+                    goo.longitude = goo.geometry.location.lng;
+                    goo.complement_adresse = "";
+                    goo.date_adhesion = "";
+                    res.push(goo);
                   }
                 })
-                */
-                res.push(json.results[i]);
               }
             });
           } else {

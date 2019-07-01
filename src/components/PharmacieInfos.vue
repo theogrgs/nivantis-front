@@ -4,13 +4,14 @@
       <h5>Gérant : {{gerant}}</h5>
     </v-card-title>
     <v-card-text>
-      <p class="text-xs-center"></p>
+      <p class="text-xs-center">Tél:{{telephone}}</p>
+      <p class="text-xs-center">@:{{mail}}</p>
     </v-card-text>
     <v-container>
       <v-layout row wrap>
         <v-flex grow>
           <v-icon color="red">place</v-icon>
-          {{adresse}}
+          {{adresse}},{{ville}}
         </v-flex>
         <v-flex shrink>
           <v-icon color="green">directions_walk</v-icon>
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-  props: ["pharmaid", "nom", "lat", "lon", "gerant", "adresse","devlat","devlon"],
+  props: ["pharmaid", "nom", "lat", "lon", "gerant", "adresse","devlat","devlon","telephone","ville","mail"],
   computed: {
     distance_display: function() {
       const distance = this.distance(

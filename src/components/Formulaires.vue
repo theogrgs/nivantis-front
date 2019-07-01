@@ -166,6 +166,7 @@ export default {
     uploadForm: function() {
       let actual = localStorage.getItem("forms");
       const f = this.generateForm();
+      console.log(f);
       if (actual) {
         actual = JSON.parse(actual);
         actual.push(this.generateForm());
